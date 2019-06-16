@@ -1,6 +1,5 @@
 import asyncio
 import importlib
-import threading
 
 from django.apps import AppConfig
 import discord
@@ -85,13 +84,11 @@ class DjangoDiscordBotConfig(AppConfig):
     bot_thread = WebBot()
 
     def ready(self):
-        # TODO: fix me i called 2 time
+        # CLOSED_TODO: fix me i called 2 time
+        # way: add option --noreload
         for command_path in settings.DISCORD_COMMAND_FILE_PATH:
             try:
                 importlib.import_module(command_path)
             except ImportError:
                 pass
-        # if self.bot_thread is not None:
-        # self.bot_thread.event_loop.stop()
-        # self.bot_thread.event_loop = asyncio.new_event_loop()
-        # self.bot_thread.start()
+        self.bot_thread.start()
