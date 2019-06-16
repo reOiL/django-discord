@@ -59,11 +59,16 @@ class WebBot(Thread):
                 # await self.COMMANDS['wrong_command'](message.channel, msg_separate, message)
                 help_msg = 'Unknown command, usage:\n'
                 for command in self.COMMANDS:
-                    help_msg += settings.DISCORD_BOT_PREFIX + command + ' -- ' + self.COMMANDS[command].help_text
+                    help_msg += settings.DISCORD_BOT_PREFIX + command + ' -- ' + self.COMMANDS[command].help_text + '\n'
                 await message.channel.send('{}\n```{}```'.format(message.author, help_msg))
             else:
                 # Execute command
-                await self.COMMANDS[clear_msg_txt]().exec(message)
+                command = self.COMMANDS[clear_msg_txt]()
+                _errors = command.clean(message)
+                if not len(_errors):
+                    await self.COMMANDS[clear_msg_txt]().exec(message)
+                else:
+                    await message.channel.send('TODO: Add error')
 
         @client.event
         async def on_ready():
