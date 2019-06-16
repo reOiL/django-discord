@@ -1,3 +1,1 @@
-from django_discord_bot.apps import WebBot
-
-WebBot().start()
+default_app_config = 'django_discord_bot.apps.DjangoDiscordBotConfig'

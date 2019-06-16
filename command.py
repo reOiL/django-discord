@@ -35,10 +35,9 @@ class Command:
         """
         Overload init method
         """
-        pass
 
     @abstractmethod
-    def exec(self, original_message):
+    async def exec(self, original_message):
         """
         If command success cleaned, this method will be called
         :type original_message: Discord original message
